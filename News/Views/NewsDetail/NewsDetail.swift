@@ -27,7 +27,7 @@ struct NewsDetailView: View {
                     
                     //Date
                     if let publishedDate = article.formattedPublishedDate {
-                        Text("Published On: \(publishedDate)")
+                        Text("Published On : \(publishedDate)")
                             .font(.headline)
                             .lineLimit(2)
                             .minimumScaleFactor(0.75)
@@ -35,7 +35,7 @@ struct NewsDetailView: View {
                     
                     //author
                     if let author = article.author {
-                        Text("Author: \(author)")
+                        Text("Author : \(author)")
                             .font(.body)
                             .padding(.top, 10)
                     }
