@@ -15,16 +15,31 @@ struct NewsDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8.0) {
                     //Image
-                    if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
-                        AsyncImage(url: url) { image in
-                            image.resizable()
-                                .scaledToFit()
-                                .aspectRatio(contentMode: ContentMode.fit)
-                        } placeholder: {
-                            Color.gray
+                    if let urlToImage = article.urlToImage, let imageUrl = URL(string: urlToImage) {
+                        AsyncImage(url: imageUrl) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image.resizable()
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: ContentMode.fit)
+                                    .cornerRadius(10)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .frame(height: 150)
+                                    .cornerRadius(10)
+                            @unknown default:
+                                EmptyView()
+                            }
                         }
+                        .cornerRadius(10)
+                    } else {
+                        Image(systemName: "photo")
+                            .frame(height: 150)
+                            .cornerRadius(10)
                     }
-                    
+
                     //Date
                     if let publishedDate = article.formattedPublishedDate {
                         Text("Published On : \(publishedDate)")
