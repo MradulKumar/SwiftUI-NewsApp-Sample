@@ -16,49 +16,26 @@ struct NewsRowView: View {
             if let publishedDate = article.formattedPublishedDate {
                 Text(publishedDate)
                     .font(.headline)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.75)
+                    .lineLimit(maxLineLimit)
+                    .minimumScaleFactor(minScaleFactor)
             }
             
             //Image
-            if let urlToImage = article.urlToImage, let imageUrl = URL(string: urlToImage) {
-                AsyncImage(url: imageUrl) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image.resizable()
-                            .scaledToFit()
-                            .aspectRatio(contentMode: ContentMode.fit)
-                            .cornerRadius(10)
-                    case .failure:
-                        Image(systemName: "photo")
-                            .frame(height: 150)
-                            .cornerRadius(10)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-                .cornerRadius(10)
-            } else {
-                Image(systemName: "photo")
-                    .frame(height: 150)
-                    .cornerRadius(10)
-            }
-            
+            ArticleImage(urlToImage: article.urlToImage)
+
             //Title
             Text(article.title)
                 .font(.headline)
-                .lineLimit(2)
-                .minimumScaleFactor(0.75)
+                .lineLimit(maxLineLimit)
+                .minimumScaleFactor(minScaleFactor)
             
             //Description
             if let desc = article.description {
                 Text(desc)
                     .font(.subheadline)
                     .foregroundColor(.gray)
-                    .minimumScaleFactor(0.75)
-                    .lineLimit(2)
+                    .minimumScaleFactor(minScaleFactor)
+                    .lineLimit(maxLineLimit)
             }
         }
         .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))

@@ -19,7 +19,7 @@ struct HomeView: View {
                             NewsRowView(article: article)
                         }
                         .onAppear {
-                            // Detect when the user reaches the last article
+                            // Detecting when the user reaches the last article
                             if article == viewModel.newsArticles.last {
                                 viewModel.fetchNews()
                             }

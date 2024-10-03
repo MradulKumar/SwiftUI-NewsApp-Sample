@@ -15,37 +15,14 @@ struct NewsDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8.0) {
                     //Image
-                    if let urlToImage = article.urlToImage, let imageUrl = URL(string: urlToImage) {
-                        AsyncImage(url: imageUrl) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: ContentMode.fit)
-                                    .cornerRadius(10)
-                            case .failure:
-                                Image(systemName: "photo")
-                                    .frame(height: 150)
-                                    .cornerRadius(10)
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                        .cornerRadius(10)
-                    } else {
-                        Image(systemName: "photo")
-                            .frame(height: 150)
-                            .cornerRadius(10)
-                    }
-
+                    ArticleImage(urlToImage: article.urlToImage)
+                    
                     //Date
                     if let publishedDate = article.formattedPublishedDate {
                         Text("Published On : \(publishedDate)")
                             .font(.headline)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.75)
+                            .lineLimit(maxLineLimit)
+                            .minimumScaleFactor(minScaleFactor)
                     }
                     
                     //author
@@ -78,11 +55,12 @@ struct NewsDetailView: View {
                     Text("More Details")
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .frame(width: 260, height: 50, alignment: .center)
+                        .frame(width: 240, height: 44, alignment: .center)
                         .foregroundColor(.white)
                         .background(Color.blue)
                         .cornerRadius(8.0)
                 }
+                .padding()
             }
         }
     }
