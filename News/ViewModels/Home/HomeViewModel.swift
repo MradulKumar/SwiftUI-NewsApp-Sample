@@ -32,7 +32,6 @@ class NewsViewModel: ObservableObject {
         //for the first time pass reset = true
         if reset {
             isLoading = true
-            
             totalResults = -1
             currentPage = 1
             newsArticles.removeAll()
@@ -64,5 +63,9 @@ class NewsViewModel: ObservableObject {
                 self?.isFetchingMore = false
             })
             .store(in: &cancellables)
+    }
+    
+    func refreshNews() {
+        fetchNews(reset: true)
     }
 }

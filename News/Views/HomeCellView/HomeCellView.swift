@@ -38,7 +38,6 @@ struct NewsRowView: View {
                     .lineLimit(maxLineLimit)
             }
         }
-        .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
     }
 }
 

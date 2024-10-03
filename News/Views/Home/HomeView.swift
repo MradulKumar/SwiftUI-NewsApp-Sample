@@ -29,12 +29,15 @@ struct HomeView: View {
                         ProgressView()
                     }
                 }
-                .listStyle(.plain)
+                .listStyle(.grouped)
                 .navigationBarTitle("News")
                 .onAppear {
                     if viewModel.newsArticles.isEmpty {
                         viewModel.fetchNews(reset: true)
                     }
+                }
+                .refreshable {
+                    viewModel.refreshNews()
                 }
             }
             
